@@ -2,11 +2,6 @@
 
 
 namespace game {
-
-    render::VertexBuffer vertices;
-    render::VertexBuffer texCoords;
-    render::IndexBuffer indencies;
-
     void renderGUI(std::function<void()> callback);
 
     float yrot = 0.0f;
@@ -18,10 +13,12 @@ namespace game {
     glm::vec4 color = glm::vec4(glm::vec3(100.0f, 149.0f, 237.0f) / 255.0f, 1.0f);
     
     int i = 0;
+    render::mesh::Mesh cubeMesh;
 
     void init() {
         // Initialize Buffer + Textures
         // Vertices
+        /*
         vertices.init();
         vertices.clear();
         vertices.add3(-1.0f, 1.0f, 0.0f);
@@ -43,7 +40,11 @@ namespace game {
         indencies.add3(0, 1, 2);
         indencies.add3(2, 1, 3);
         indencies.update();
+        */
+
         render::addTexture("happy", "data/textures/happyface.png");
+
+        cubeMesh.init("data/meshes/toras.obj");
     }
 
     void handleEvent(SDL_Event* e) {
@@ -75,9 +76,9 @@ namespace game {
 
         render::bindTexture("happy", GL_TEXTURE0);
         render::getMainShader()->draw(
-            vertices,
-            texCoords,
-            indencies
+            cubeMesh.vertices,
+            cubeMesh.texCoords,
+            cubeMesh.indencies
         );
         render::unbindTextre(GL_TEXTURE0);
 
@@ -103,9 +104,12 @@ namespace game {
     }
 
     void release() {
+        /*
         indencies.release();
         texCoords.release();
         vertices.release();
+        */
+        cubeMesh.release();
     }
 
     void setup(app::Config* config) {

@@ -8,7 +8,8 @@ env["source_files"] += [
     source("app.cpp"),
     source("imw.cpp"),
     source("input.cpp"),
-    source("render.cpp")
+    source("render.cpp"),
+    source("mesh.cpp")
 ]
 
 SConscript("#/src/engine/imgui/SConscript", exports="env")

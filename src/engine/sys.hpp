@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -515,6 +516,39 @@ namespace render {
     void addTexture(std::string name, std::string path);
     void bindTexture(std::string name, GLenum active);
     void unbindTextre(GLenum active);
+
+    namespace mesh {
+        struct Index {
+            uint32_t vertice;
+            uint32_t normal;
+            uint32_t texCoord;
+        };
+
+        struct Face {
+            Index t1;
+            Index t2;
+            Index t3;
+        };
+
+        struct Object {
+            std::vector<glm::vec3> vertices;
+            std::vector<glm::vec3> normals;
+            std::vector<glm::vec2> texCoords;
+            std::vector<Face> faces;
+        };
+
+        void loadObject(Object* obj, std::string path);
+
+        struct Mesh {
+            render::VertexBuffer vertices;
+            render::VertexBuffer texCoords;
+            render::IndexBuffer indencies;
+
+            void init(std::string path);
+            void release();
+
+        };
+    }
 }
 
 // This is an imgui wrapper
